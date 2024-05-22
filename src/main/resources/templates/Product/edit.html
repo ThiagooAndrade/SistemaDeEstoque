@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-md-6 form-group offset-md-3">
                     <label>Nome do Aluno:</label>
-                    <input class="form-control" placeholder="Ex: João da Silva" th:field="*{name}">
+                    <input class="form-control" placeholder="Ex: Arroz" th:field="*{name}">
                 </div>
             </div>
 
@@ -43,41 +43,9 @@
                 </div>
             </div>
 
-            <!-- Matricula -->
-            <div class="row">
-                <div class="col-md-6 form-group offset-md-3">
-                    <label>Gerar Matricula: </label>
-                    <input readonly="readonly" class="form-control" id="matricula" th:field="*{matricula}">
-                    <button type="button" onclick="GerarMatricula();" class="btn-primary"
-                        style="margin-top: 10px">Gerar</button>
-                </div>
-            </div>
-
-            <!-- Turno -->
-            <div class="row">
-                <div class="col-md-6 form-group offset-md-3">
-                    <label>Selecione o Turno: </label>
-                    <select class="form-control" th:field="*{turno}">
-                        <option th:each="turno : ${T(br.com.gerenciamento.enums.Turno).values()}" th:value="${turno}"
-                            th:text="${turno}"></option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Status -->
-            <div class="row">
-                <div class="col-md-6 form-group offset-md-3">
-                    <label>Selecione o Status: </label>
-                    <select class="form-control" th:field="*{status}">
-                        <option th:each="status : ${T(br.com.gerenciamento.enums.Status).values()}" th:value="${status}"
-                            th:text="${status}"></option>
-                    </select>
-                </div>
-            </div>
-
             <div class="d-grid gap-2 d-md-block">
                 <button type="submit" class="btn btn-outline-success">Salvar</button>
-                <a th:href="@{/alunos-adicionados}" class="btn btn-outline-danger">Voltar</a>
+                <a th:href="@{/listProduct}" class="btn btn-outline-danger">Voltar</a>
             </div>
 
         </form>

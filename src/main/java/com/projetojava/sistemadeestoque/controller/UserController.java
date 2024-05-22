@@ -57,7 +57,7 @@ public class UserController {
     public ModelAndView register(User user) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         userService.saveUser(user);
-        modelAndView.setViewName("login/login");
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 
@@ -70,7 +70,7 @@ public class UserController {
             modelAndView.setViewName("login/login");
         }
 
-        User userLogin = userService.loginUser(user.getUser(), Util.md5(user.getPassword()));
+        User userLogin = userService.loginUser(user.getUsername(), Util.md5(user.getPassword()));
         if (userLogin == null) {
             modelAndView.addObject("msg", "Usuario não encontrado. Tente novamente");
         } else {

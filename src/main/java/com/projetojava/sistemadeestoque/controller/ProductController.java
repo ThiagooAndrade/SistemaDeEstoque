@@ -33,22 +33,22 @@ public class ProductController {
     }
 
     @PostMapping("InsertProducts")
-    public ModelAndView inserirAluno(@Valid Product product, BindingResult bindingResult) {
+    public ModelAndView insertProducts(@Valid Product product, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("Product/formProduct");
             modelAndView.addObject("product");
         } else {
-            modelAndView.setViewName("redirect:/products-adicionados");
+            modelAndView.setViewName("redirect:/listProduct");
             productRepository.save(product);
         }
         return modelAndView;
     }
 
-    @GetMapping("products-added")
+    @GetMapping("listProduct")
     public ModelAndView listOfProducts() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("Product/listProducts");
+        modelAndView.setViewName("Product/listProduct");
         modelAndView.addObject("productsList", productRepository.findAll());
         return modelAndView;
     }
@@ -56,7 +56,7 @@ public class ProductController {
     @GetMapping("/edit/{id}")
     public ModelAndView editar(@PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("Product/editar");
+        modelAndView.setViewName("Product/edit");
 
         Optional<Product> product = productRepository.findById(id);
         modelAndView.addObject("product", product);
@@ -67,14 +67,14 @@ public class ProductController {
     public ModelAndView editar(Product product) {
         ModelAndView modelAndView = new ModelAndView();
         productRepository.save(product);
-        modelAndView.setViewName("redirect:/products-added");
+        modelAndView.setViewName("redirect:/listProduct");
         return modelAndView;
     }
 
     @GetMapping("/remove/{id}")
     public String removeProduct(@PathVariable("id") Long id) {
         productRepository.deleteById(id);
-        return "redirect:/products-added";
+        return "redirect:/listProduct";
     }
 
     @GetMapping("filter-products")

@@ -20,7 +20,7 @@ public class User {
     private String email;
 
     @Size(min = 3, max = 20, message = "O nome do usuario precisa conter entre 3 a 20 caracteres")
-    private String user;
+    private String username;
 
     private String password;
 
@@ -40,12 +40,12 @@ public class User {
         this.email = email;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
