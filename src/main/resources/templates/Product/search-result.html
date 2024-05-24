@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <title>Sistema de Gerenciamento de Alunos</title>
+    <meta name="author" content="Julius Cavalcante">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+    <script src="https://kit.fontawesome.com/006642858d.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div th:insert="~{fragments/fragments :: cabecalho}"></div>
+
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between ">
+            <h3>Produtos Encontrados na Pesquisa</h3>
+            <a th:href="@{/products}" class="btn btn-primary">Voltar</a>
+        </div>
+        <hr>
+
+        <table class="table table-bordered table-hover">
+
+            <thead>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">buyPrice</th>
+                <th scope="col">sellPrice</th>
+                <th scope="col">whereStored</th>
+                <th scope="col">Action</th>
+
+            </thead>
+            <tbody>
+                <tr scope="row" th:each="product : ${ListOfProducts}">
+
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.type}"></td>
+                    <td th:text="${product.quantity}"></td>
+                    <td th:text=" 'R$' + ${product.buyPrice}"></td>
+                    <td th:text=" 'R$' + ${product.sellPrice}"></td>
+                    <td th:text="${product.whereStored}"></td>
+
+                    <td>
+                        <a class="btn btn-primary" th:href="@{editar/{id}(id=${product.id})}">
+                            <i class="bi bi-pencil-square"></i> Editar</a>
+
+                        <a class="btn btn-danger" th:href="@{remover/{id}(id=${product.id})}">
+                            <i class="bi bi-x-square"></i> Remover</a>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -99,4 +99,10 @@ public class Product {
         WhereStored = whereStored;
     }
 
+    @Override
+    public String toString() {
+        return "Product [id=" + id + ", name=" + name + ", type=" + type + ", quantity=" + quantity + ", buyPrice="
+                + buyPrice + ", sellPrice=" + sellPrice + ", WhereStored=" + WhereStored + "]";
+    }
+
 }

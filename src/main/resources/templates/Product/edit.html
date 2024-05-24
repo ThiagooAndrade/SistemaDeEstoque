@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div th:replace="fragments/fragments :: cabecalho"></div>
+    <div th:insert="~{fragments/fragments :: cabecalho}"></div>
 
     <div class="container" style="margin-top: 20px;">
 
@@ -30,10 +30,10 @@
                 </div>
             </div>
 
-            <!-- Curso -->
+            <!-- Tipo -->
             <div class="row">
                 <div class="col-md-6 form-group offset-md-3">
-                    <label>Selecione o tipo: </label>
+                    <label>Selecione o tipo do produto: </label>
                     <select class="form-control" th:field="*{type}">
 
                         <option th:each="type : ${T(com.projetojava.sistemadeestoque.enums.ProductType).values()}"
@@ -43,9 +43,48 @@
                 </div>
             </div>
 
+            <!-- Quantidade -->
+            <div class="row">
+                <div class="col-md-6 form-group offset-md-3">
+                    <label>Quantidade do produto:</label>
+                    <input type="number" class="form-control" placeholder="Ex: 12" th:field="*{quantity}">
+                </div>
+            </div>
+
+            <!-- buyPrice -->
+            <div class="row">
+                <div class="col-md-6 form-group offset-md-3">
+                    <label>Valor de compra do produto:</label>
+                    <input type="text"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');"
+                        class="form-control" placeholder="Ex: 12" th:field="*{buyPrice}">
+                </div>
+            </div>
+
+            <!-- sellPrice -->
+            <div class="row">
+                <div class="col-md-6 form-group offset-md-3">
+                    <label>Valor de venda do produto:</label>
+                    <input type="text"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');"
+                        class="form-control" placeholder="Ex: 12" th:field="*{sellPrice}">
+                </div>
+            </div>
+
+            <!-- whereStored -->
+            <div class="row">
+                <div class="col-md-6 form-group offset-md-3">
+                    <label>Local de estoque do produto:</label>
+                    <select class="form-control" th:field="*{whereStored}">
+                        <option th:each="local : ${T(com.projetojava.sistemadeestoque.enums.WhereStored).values()}"
+                            th:value="${local}" th:text="${local}"></option>
+                    </select>
+                </div>
+            </div>
+
             <div class="d-grid gap-2 d-md-block">
                 <button type="submit" class="btn btn-outline-success">Salvar</button>
-                <a th:href="@{/listProduct}" class="btn btn-outline-danger">Voltar</a>
+                <a th:href="@{/products}" class="btn btn-outline-danger">Voltar</a>
             </div>
 
         </form>

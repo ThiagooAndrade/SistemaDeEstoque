@@ -13,6 +13,7 @@ import com.projetojava.sistemadeestoque.repository.ProductRepository;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,7 @@ public class ProductController {
             modelAndView.setViewName("Product/formProduct");
             modelAndView.addObject("product");
         } else {
-            modelAndView.setViewName("redirect:/listProduct");
+            modelAndView.setViewName("redirect:/products");
             productRepository.save(product);
         }
         return modelAndView;
@@ -48,39 +49,8 @@ public class ProductController {
     @GetMapping("listProduct")
     public ModelAndView listOfProducts() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("Product/listProduct");
+        modelAndView.setViewName("Product/products");
         modelAndView.addObject("productsList", productRepository.findAll());
-        return modelAndView;
-    }
-
-    @GetMapping("/edit/{id}")
-    public ModelAndView editar(@PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("Product/edit");
-
-        Optional<Product> product = productRepository.findById(id);
-        modelAndView.addObject("product", product);
-        return modelAndView;
-    }
-
-    @PostMapping("/edit")
-    public ModelAndView editar(Product product) {
-        ModelAndView modelAndView = new ModelAndView();
-        productRepository.save(product);
-        modelAndView.setViewName("redirect:/listProduct");
-        return modelAndView;
-    }
-
-    @GetMapping("/remove/{id}")
-    public String removeProduct(@PathVariable("id") Long id) {
-        productRepository.deleteById(id);
-        return "redirect:/listProduct";
-    }
-
-    @GetMapping("filter-products")
-    public ModelAndView filterProducts() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("Product/filterProducts");
         return modelAndView;
     }
 
@@ -89,6 +59,52 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("Product/products");
         modelAndView.addObject("products", productRepository.findAll());
+        return modelAndView;
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView editar(@PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("Product/edit");
+
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            modelAndView.addObject("product", product);
+        } else {
+            // Lidar com o caso em que o produto não é encontrado
+            // Por exemplo, você pode redirecionar para uma página de erro
+            modelAndView.setViewName("error/404");
+            modelAndView.addObject("message", "Produto não encontrado");
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("/edit")
+    public ModelAndView editar(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        System.out.println(product);
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("Product/edit");
+            return modelAndView;
+        }
+
+        productRepository.save(product);
+        modelAndView.setViewName("redirect:/products");
+        return modelAndView;
+    }
+
+    @GetMapping("/remove/{id}")
+    public String removeProduct(@PathVariable("id") Long id) {
+        productRepository.deleteById(id);
+        return "redirect:/products";
+    }
+
+    @GetMapping("filter-products")
+    public ModelAndView filterProducts() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("Product/filterProducts");
         return modelAndView;
     }
 
@@ -101,7 +117,7 @@ public class ProductController {
         } else {
             listProducts = productRepository.findByNameContainingIgnoreCase(name);
         }
-        modelAndView.addObject("ListOfProducts", listProducts);
+        modelAndView.addObject("listProducts", listProducts);
         modelAndView.setViewName("Product/search-result");
         return modelAndView;
     }

@@ -19,6 +19,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -45,19 +46,27 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/register")
-    public ModelAndView register() {
+    // @GetMapping("/register")
+    // public ModelAndView register() {
+    // ModelAndView modelAndView = new ModelAndView();
+    // modelAndView.addObject("user", new User());
+    // modelAndView.setViewName("login/register");
+    // return modelAndView;
+    // }
+
+    // @PostMapping("/saveUser")
+    // public ModelAndView register(User user) throws Exception {
+    // ModelAndView modelAndView = new ModelAndView();
+    // userService.saveUser(user);
+    // modelAndView.setViewName("redirect:/");
+    // return modelAndView;
+    // }
+
+    @GetMapping("/login")
+    public ModelAndView loginPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", new User());
-        modelAndView.setViewName("login/register");
-        return modelAndView;
-    }
-
-    @PostMapping("/saveUser")
-    public ModelAndView register(User user) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
-        userService.saveUser(user);
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("login/login");
         return modelAndView;
     }
 

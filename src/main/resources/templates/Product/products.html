@@ -14,10 +14,17 @@
 </head>
 
 <body>
-    <div th:replace="fragments/fragments :: cabecalho"></div>
+    <div th:insert="~{fragments/fragments :: cabecalho}"></div>
 
-    <div class="container">
-        <h3>Últimos Alunos Adicionados</h3>
+    <div class="container mt-2">
+        <div class="d-flex justify-content-between">
+            <h3>Últimos produtos adicionados</h3>
+            <form class="d-flex gap-3" method="post" action="/search-product" th:object="${name}">
+                <input class="form-control" type="text" placeholder="Filtrar por nome">
+                <button type="submit" class="btn btn-success">Pesquisar</button>
+            </form>
+        </div>
+
         <hr>
 
         <table class="table table-bordered table-hover">
@@ -29,7 +36,7 @@
                 <th scope="col">SellPrice</th>
                 <th scope="col">BuyPrice</th>
                 <th scope="col">WhereStored</th>
-
+                <th scope="col">Action</th>
             </thead>
             <tbody>
                 <tr scope="row" th:each="product : ${products}">
@@ -37,8 +44,8 @@
                     <td th:text="${product.name}"></td>
                     <td th:text="${product.quantity}"></td>
                     <td th:text="${product.type}"></td>
-                    <td th:text="${product.sellPrice}"></td>
-                    <td th:text="${product.buyPrice}"></td>
+                    <td th:text="'R$' + ${product.sellPrice}"></td>
+                    <td th:text="'R$' + ${product.buyPrice}"></td>
                     <td th:text="${product.whereStored}"></td>
                     <td>
                         <a class="btn btn-primary" th:href="@{edit/{id}(id=${product.id})}">
